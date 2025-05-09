@@ -3,163 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <title>Cronômetro - Projeto</title>
+    <title>Jogo da Velha - Projeto</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="stopwatch">
-        <h2 class="time" id="timer"> 
-            00:00:00.00 
-        </h2>
-
-        <div class="actions">
-            <button class="reset" id="reset">
-                <i class="fa-solid fa-rotate-right"></i>
-            </button>
-
-            <button class="power" id="power" action="start">
-                <i class="fa-solid fa-play"></i>
-            </button>
-
-            <button class="mark" id="mark">
-                <i class="fa-solid fa-flag"></i>
-            </button>
+    <main>
+        <h1>JOGO DA VELHA</h1>
+        <hr>
+        <div class="game">
+            <button data-i="1"></button>
+            <button data-i="2"></button>
+            <button data-i="3"></button>
+            <button data-i="4"></button>
+            <button data-i="5"></button>
+            <button data-i="6"></button>
+            <button data-i="7"></button>
+            <button data-i="8"></button>
+            <button data-i="9"></button>
         </div>
-        <div class="marks-list" id="marks-list"></div>
-    </div>
+        <h2 class="currentPlayer"></h2>
+    </main>
 
-<style>
-    body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        width: 100%;
-        background: linear-gradient(180deg, #67b8ff, #070070);
-        font-family: "Alfa Slab One", serif;
-    }
-
-    .stopwatch {
-        background-color: #000625;
-        padding: 3rem;
-        border-radius: 8px;
-    }
-
-    .time {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #000625;
-        height: 200px;
-        width: 210px;
-        border: 3px solid #00ffff;
-        border-radius: 100%;
-        font-weight: 600;
-        font-size: 30px;
-        color: white;
-        margin-bottom: 1.5rem;
-        padding: 4rem;
-    }
-
-    .actions {
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .actions button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 40px; 
-        padding: 1rem;
-        font-size: 1rem;
-        border-radius: 30px;
-        border: none;
-        background-color: #a7e5fe;
-        color: black;
-        cursor: pointer;
-        transition: background-color .2s ease-in;
-    }
-
-    .actions button:hover {
-        background-color: #00e0e0;
-    }
-
-    .marks-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
-        color: white;
-    }
-
-    .marks-list p:first-child {
-        margin-top: 0.5rem;
-    }
-</style>
-
-<script>
-    const timerEl = document.getElementById('timer');
-    const marksList = document.getElementById('marks-list');
-    let intervalId = null;
-    let timer = 0; 
-    let marks = [];
-
-    const formatTime = (time) => {
-        const hours = Math.floor(time / 3600000);
-        const minutes = Math.floor((time % 3600000) / 60000);
-        const seconds = Math.floor((time % 60000) / 1000);
-        const hundredths = Math.floor((time % 1000) / 10);
-
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${hundredths.toString().padStart(2, '0')}`;
-    }
-
-    const setTimer = (time) => {
-        timerEl.innerText = formatTime(time);
-    }
-
-    const addMarkToList = (markIndex, markTime) => {
-        marksList.innerHTML += `<p>Marca ${markIndex}: ${formatTime(markTime)}</p>`;
-    }
-
-    const markTime = () => {
-        marks.push(timer);
-        addMarkToList(marks.length, timer);
-    }
-
-    const toggleTimer = () => {
-        const button = document.getElementById('power');
-        const action = button.getAttribute('action');
-
-        if (action === 'start' || action === 'continue') {
-            intervalId = setInterval(() => {
-                timer += 10; 
-                setTimer(timer);
-            }, 10);
-            button.setAttribute('action', 'pause');
-            button.innerHTML = '<i class="fa-solid fa-pause"></i>';
-        } else if (action === 'pause') {
-            clearInterval(intervalId);
-            button.setAttribute('action', 'continue');
-            button.innerHTML = '<i class="fa-solid fa-play"></i>';
-        }
-    }
-
-    const resetTimer = () => {
-        clearInterval(intervalId);
-        timer = 0;
-        marks = [];
-        setTimer(timer);
-        marksList.innerHTML = '';
-    const button = document.getElementById('power');
-        button.setAttribute('action', 'start');
-        button.innerHTML = '<i class="fa-solid fa-play"></i>';
-    }
-
-    document.getElementById('power').addEventListener('click', toggleTimer);
-    document.getElementById('mark').addEventListener('click', markTime);
-    document.getElementById('reset').addEventListener('click', resetTimer);
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
